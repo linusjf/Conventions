@@ -55,3 +55,5 @@
 - Consider lists for complex content.
 - Use reference style links in tables to keep the contents of each cell as short as possible.
 - Please prefer standard Markdown syntax wherever possible and avoid HTML hacks.
+- Regenerate the existing table of contents whenever the structure of the document changes. Retain any toc markers\
+  such as `<!-- toc -->` and `<!-- tocstop -->`.
