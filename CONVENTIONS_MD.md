@@ -23,7 +23,7 @@
 - Use single underscores for italics. Avoid using single asterisks for italicized text.
 - Use dashes for bulleted lists.
 - Use lazy numbering for long lists.
-- Use consistent indentation. When nesting lists, use a 2 space indent for both numbered and bulleted lists.
+- Use consistent indentation. When nesting lists, use a 4 space indent for both numbered and bulleted lists.
 - For lists with concise items most or all of which fit on one line, do not leave an empty line between list items.
 - If many of your list items are long and wrap onto multiple lines, a blank line between list items improves legibility.
 - Use `backticks` for short code quotations and field names.
