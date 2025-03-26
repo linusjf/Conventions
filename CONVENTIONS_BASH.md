@@ -112,3 +112,5 @@
      main "$@"
     fi
   ```
+
+- Suppress shellcheck violations SC2155 and SC1091.
