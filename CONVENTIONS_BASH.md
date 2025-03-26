@@ -105,3 +105,10 @@
 - It's worth noting that Bash variables starting with an underscore \
   (e.g., `_`, `__`, etc.) are generally reserved for internal use and should not\
   be modified.
+- When you have a function main in the script, wrap the call to main as below:
+
+  ```bash
+   if [[ "${BASH_SOURCE[0]}" == "${0}" ]];then
+     main "$@"
+    fi
+  ```
