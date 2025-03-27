@@ -113,5 +113,4 @@
     fi
   ```
 
-- Add the following comment `# shellcheck disable=SC2155` before any initialization or assignment statement that uses the output of a command.
-- Add the following comment `# shellcheck disable=SC1090,SC1091` before any `source` statements.
+- Disable shellcheck rules SC2155, SC1090,SC1091 for every script.
