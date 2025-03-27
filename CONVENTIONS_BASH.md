@@ -113,4 +113,5 @@
     fi
   ```
 
-- Disable shellcheck rules SC2155, SC1090,SC1091 for every script.
+- Disable shellcheck rules SC2155, SC1090,SC1091 for every script. Add the following comment to do that:
+  `# shellcheck disable=SC2155,SC1090,SC1091`
