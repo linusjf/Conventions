@@ -116,18 +116,12 @@
 
 - Disable shellcheck rules SC2155, SC1090,SC1091 for every script. Add the following comment to do that:
   `# shellcheck disable=SC2155,SC1090,SC1091` after the shebang and header.
-  <<<<<<< HEAD
-- Add the following comment `# shellcheck disable=SC2155` before any initialization or assignment statement that uses the output of a command.
 - Every script must have a debug mode that can be enabled from the command line. It can be as simples as `set -x`.
 - For a script that uses complex logic and updates more that a few files, it is a good practice to provide a dry-run \
    mode with the option enabled from the command line.
-  ||||||| parent of 466d057 (feat: add rule for sourcing file)
-  =======
 - When sourcing a file for a script that may be executed from anywhere, use the following template:
 
   ```bash
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   source "$SCRIPT_DIR/config.sh"
   ```
-
-> > > > > > > 466d057 (feat: add rule for sourcing file)
