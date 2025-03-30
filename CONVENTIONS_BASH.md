@@ -102,7 +102,7 @@
   `BASH_VERSION`,`BASH_VERSINFO`,`EUID`, `UID`, `PPID`, `PID`, `PGID`, `SID`,\
   `SHLVL`, `RANDOM` ,`LINENO`, `FUNCNAME`, `BASH_SOURCE`, `BASH_LINENO`, `OSTYPE`,\
   `MACHTYPE`, `HOSTTYPE`,`HOSTNAME`,`LINES`, `COLUMNS`,`GROUPS`,`HOME`,`OPTARG`\
-  ,`OPTIND`,`REPLY`, `SECONDS`,`TERM`.
+  ,`OPTIND`,`REPLY`, `SECONDS`,`TERM`, `DEBUG`.
 - It's worth noting that Bash variables starting with an underscore \
   (e.g., `_`, `__`, etc.) are generally reserved for internal use and should not\
   be modified.
@@ -114,9 +114,13 @@
     fi
   ```
 
-- Disable shellcheck rules SC2155, SC1090,SC1091 for every script. Add the following comment to do that:
-  `# shellcheck disable=SC2155,SC1090,SC1091` after the shebang and header.
 - Add the following comment `# shellcheck disable=SC2155` before any initialization or assignment statement that uses the output of a command.
 - Every script must have a debug mode that can be enabled from the command line. It can be as simples as `set -x`.
 - For a script that uses complex logic and updates more that a few files, it is a good practice to provide a dry-run \
-  mode with the option enabled from the command line.
+   mode with the option enabled from the command line.
+- When sourcing a file for a script that may be executed from anywhere, use the following template:
+
+  ```bash
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  source "$SCRIPT_DIR/config.sh"
+  ```
