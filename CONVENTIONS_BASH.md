@@ -81,7 +81,9 @@
 - If you’ve got functions, put them all together near the top of the file.\
    Only includes, set statements and setting constants may be done\
   before declaring functions.
-- Declare function-specific variables with local.
+- Declare function-specific variables with local. It must be remembered though that local variables are only \
+  accessible within the function body. If variables are to be accessed or modified by multiple functions, either \
+  declare them globally or pass them as variables to other functions.
 - File names should be lowercase, with underscores to separate words if desired.
 - Constants and anything exported to the environment should be capitalized,\
   separated with underscores, and declared at the top of the file.
