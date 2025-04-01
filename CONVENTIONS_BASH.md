@@ -172,19 +172,6 @@
     fi
   ```
 
-<<<<<<< HEAD
-
-- Disable shellcheck rules SC2155, SC1090,SC1091 for every script. Add the following comment to do that:
-  `# shellcheck disable=SC2155,SC1090,SC1091` after the shebang and header.
-
-||||||| b71ff44
-
-- Disable shellcheck rules SC2155, SC1090,SC1091 for every script. Add the following comment to do that:
-  `# shellcheck disable=SC2155,SC1090,SC1091` after the shebang and header.
-  =======
-
-> > > > > > > 75606830d29d7b220a035d18c7b44c2f0bb81f55
-
 - Every script must have a debug mode that can be enabled from the command line. It can be as simple as `set -x`.
 
 - For a script that uses complex logic, it is a good practice to provide a dry-run \
