@@ -83,7 +83,7 @@
 - else should be on its own line and closing statements (fi and done) should be\
   on their own line vertically aligned with the opening statement.
 
-- Although it is possible to omit in "$@" in for loops we recommend consistently\
+- Although it is possible to omit `in "$@"` in for loops we recommend consistently\
   including it for clarity.
 
 - In case statements, Indent alternatives by 2 spaces.\
@@ -94,12 +94,12 @@
   and ;; on separate lines.
 
 - In order of precedence: Stay consistent with what you find;\
-  quote your variables; prefer "${var}" over "$var".
+  quote your variables; prefer `"${var}"` over `"$var"`.
 
 - Use `"$@"` unless you have a specific reason to use `"$*"`, such as simply\
   appending the arguments to a string in a message or log.
 
-- Use $(command) instead of backticks.
+- Use `$(command)` instead of backticks.
 
 - `[[…]]` is preferred over `[ … ]`, test and `/usr/bin/[`.
 
