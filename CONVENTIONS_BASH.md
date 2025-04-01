@@ -23,7 +23,7 @@
 - Consider security implications of the code.\
   Implement security best practices to protect against vulnerabilities and attacks.
 
-- Executables must start with #!/usr/bin/env bash and minimal flags.
+- Executables must start with `#!/usr/bin/env bash` and minimal flags.
 
 - Use set to set shell options so that calling your script as `bash script_name`\
   does not break its functionality.
@@ -56,9 +56,9 @@
   to use a function in your library by reading the comments (and self-help,\
   if provided) without reading the code.
 
-- All function header comments should describe the intended API behaviour. \\
+- All function header comments should describe the intended API behaviour.
 
-- Description of the function includes\
+- Description of a function includes\
   `Globals: List of global variables used and modified`\
   `Arguments: Arguments taken`,`Outputs: Output to STDOUT or STDERR`\
   `Returns: Returned values other than the default exit status of last command`.
@@ -96,12 +96,12 @@
 - In order of precedence: Stay consistent with what you find;\
   quote your variables; prefer "${var}" over "$var".
 
-- Use "$@" unless you have a specific reason to use $\*, such as simply\
+- Use `"$@"` unless you have a specific reason to use `"$*"`, such as simply\
   appending the arguments to a string in a message or log.
 
 - Use $(command) instead of backticks.
 
-- \[\[…\]\] is preferred over \[ … \], test and /usr/bin/\[.
+- `[[…]]` is preferred over `[ … ]`, test and `/usr/bin/[`.
 
 - Use quotes rather than filler characters where possible.
 
@@ -142,7 +142,7 @@
 
 - Aliases should be avoided in scripts. Use functions instead.
 
-- Always use `(( … ))` or `$(( … ))` rather than let or $\[ … \] or expr.
+- Always use `(( … ))` or `$(( … ))` rather than `let` or `$[ … ]` or `expr`.
 
 - Use process substitution or the readarray builtin (bash4+) \
   in preference to piping to while.\
@@ -150,7 +150,7 @@
   do not propagate to the parent shell.
 
 - Function names should be lower-case, with underscores to separate words.\
-  Separate libraries with ::.\
+  Separate libraries with `::`.\
   Parentheses are required after the function name.\
   The keyword function is optional, but must be used consistently throughout a project.
 
