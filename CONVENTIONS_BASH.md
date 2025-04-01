@@ -65,9 +65,6 @@
 
 - Comment tricky, non-obvious, interesting or important parts of your code.
 
-- Use TODO comments for code that is temporary, a short-term solution, or \
-  good-enough but not perfect.
-
 - Indent 2 spaces. No tabs.
 
 - Maximum line length is 80 characters.
@@ -78,20 +75,20 @@
 - Pipelines should be split one per line if they don’t all fit on one line.\
   If a pipeline all fits on one line, it should be on one line.
 
-- Put ; then and ; do on the same line as the if, for, or while.
+- Put `; then` and `; do` on the same line as the `if`, `for`, or `while`.
 
-- else should be on its own line and closing statements (fi and done) should be\
+- `else` should be on its own line and closing statements (`fi` and `done`) should be\
   on their own line vertically aligned with the opening statement.
 
 - Although it is possible to omit `in "$@"` in for loops we recommend consistently\
   including it for clarity.
 
-- In case statements, Indent alternatives by 2 spaces.\
+- In case statements, indent alternatives by 2 spaces.\
   One-line alternatives need a space after the close parenthesis of the pattern\
-  and before the ;;\
+  and before the `;;`\
   Long or multi-command alternatives should be split over \
   multiple lines with the pattern, actions, \
-  and ;; on separate lines.
+  and `;;` on separate lines.
 
 - In order of precedence: Stay consistent with what you find;\
   quote your variables; prefer `"${var}"` over `"$var"`.
@@ -107,7 +104,7 @@
 
 - Use an explicit path when doing wildcard expansion of filenames.
 
-- eval should be avoided.
+- `eval` should be avoided.
 
 - Bash arrays should be used to store lists of elements, to avoid quoting\
   complications. This particularly applies to argument lists.
@@ -180,11 +177,11 @@
 - Complex scripts must provide a verbose mode enabled using -v and --verbose from the command line. When verbose mode \
   is enabled, the script must provide detailed information about its execution, including any errors or warnings.
 
-- When sourcing a file for a script that may be executed from anywhere, use the following template:
+- When sourcing a file (say `include.sh`) for a script that may be executed from anywhere, use the following template:
 
   ```bash
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  source "$SCRIPT_DIR/{include.sh}"
+  source "$SCRIPT_DIR/include.sh"
   ```
 
 - A script's usage must also include examples.
