@@ -114,7 +114,7 @@
 
 - Always check return values and give informative return values.
 
-- A function called main is required for scripts long enough to contain\
+- A function called `main` is required for scripts long enough to contain\
   at least one other function.
 
 - Put all functions together in the file just below constants.\
@@ -161,7 +161,7 @@
   (e.g., `_`, `__`, etc.) are generally reserved for internal use and should not\
   be modified.
 
-- When you have a function main in the script, wrap the call to main as below:
+- When you have a function `main` in the script, wrap the call to `main` as below:
 
   ```bash
    if [[ "${BASH_SOURCE[0]}" == "${0}" ]];then
