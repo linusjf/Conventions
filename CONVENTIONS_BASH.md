@@ -185,3 +185,58 @@
   ```
 
 - A script's usage must also include examples.
+- For long-running scripts, trap signals, such as user pressing `CTRL-C`, then call a function that exits gracefully:
+
+  ```bash
+   trap_exit() {
+   # Do any cleanup here, such as closing open files,
+   # deleting temporary data, or printing results.
+   }
+
+   trap trap_exit EXIT
+  ```
+
+- If you only trap one signal, then prefer to trap EXIT instead of TERM, INT, HUP, etc. This is because EXIT is the most-significant of these signals.
+  If you prefer to trap multiple signals, then we favor the naming convention of `trap_` such as:
+
+  ```bash
+     trap_exit() …
+
+     trap_term() …
+
+     trap_int() …
+
+     trap_hup() …
+  ```
+
+This naming convention helps clarify that the functions are related to the trap command and also to the specific signal.
+
+- Use semantic versioning. Give each script a version name a.k.a. version number, and prefer semantic versioning: <http://semver.org/>. Prefer a function version() such as:
+
+  ```bash
+  readonly VERSION="1.0.0"
+  function version() {
+  printf "%s\n" "$VERSION"
+  }
+  ```
+
+  This should be enabled by a command line option --version.
+
+- For booleans use `true` and `false`.
+- Set color in output as below:
+  1. Use POSIX shell colors.
+  1. Implement colors with POSIX escape strings.
+  1. Use an embedded actual escape character.
+  1. Gate the color settings as follows:
+     1. Ensure the destination is a terminal. If the destination is not a terminal, then do not use color.
+     2. Ensure the user wants color. If the `NO_COLOR` environment variable is set, or the `TERM` environment variable is set to "dumb", then do not use color.
+- Date & time format: use UTC and ISO8601
+  - For date values and time values prefer
+    1. UTC (Universal Coordinated Time, a.k.a. Greenwich Mean Time, Zulu Time Zone, etc.).
+    2. ISO8601 standard format.
+    3. Sort-friendly ordering such as YYYY-MM-DD and HH:MM:SS and +00:00
+  - Format:
+    1. Date format with year, month number, month-day number: "YYYY-MM-DD".
+    2. Date-week format with year, week number, week-day number: "YYYY-W##-#"
+    3. Time format with hour, minute, second, nanosecond: "HH:MM:SS.NNNNNNNNN"
+    4. Timezone format with hour offset and minute offset: "+HH:MM".
