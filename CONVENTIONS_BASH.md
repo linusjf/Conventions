@@ -180,7 +180,11 @@
 - When sourcing a file (say `include.sh`) for a script that may be executed from anywhere, use the following template:
 
   ```bash
-  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  if command -v realpath >/dev/null 2>&1; then
+    SCRIPT_DIR=$(dirname "$(realpath "$0")")
+  else
+    SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+  fi
   source "$SCRIPT_DIR/include.sh"
   ```
 
@@ -240,3 +244,4 @@ This naming convention helps clarify that the functions are related to the trap 
     2. Date-week format with year, week number, week-day number: "YYYY-W##-#"
     3. Time format with hour, minute, second, nanosecond: "HH:MM:SS.NNNNNNNNN"
     4. Timezone format with hour offset and minute offset: "+HH:MM".
+- Parse options via `while` and `case` not `getopts` or `getopt`.
