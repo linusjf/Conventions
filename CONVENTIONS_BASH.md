@@ -261,3 +261,10 @@ This naming convention helps clarify that the functions are related to the trap 
   - Use `XDG_RUNTIME_HOME` environment variable if it's set.
   - Otherwise use `$HOME/.runtime`.
   - Append the program command, so the program uses its own subdirectory.
+- We prefer a program to be able to return its own name.
+
+  ```bash
+  program() {
+    printf "%s\n" "$(basename "$0")"
+  }
+  ```
