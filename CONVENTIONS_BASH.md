@@ -301,3 +301,6 @@ This naming convention helps clarify that the functions are related to the trap 
   assert_empty() { [ -z "$1" ] || err $FUNCNAME "$@" ; }; export -f assert_empty
   assert_equal() { [ "$1" = "$2" ] || err $FUNCNAME "$@" ; }; export -f assert_equal
   ```
+
+- If a program's output is verbose, add a quiet option on the command line.
+  --quiet and -q which suppress stdout.
