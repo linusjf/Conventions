@@ -294,3 +294,10 @@ This naming convention helps clarify that the functions are related to the trap 
   ```
 
   It's best to have these in a separate bash library file to be sourced by scripts that use any of these methods.
+
+- We like to test our code during runtime by using assertions a.k.a. assert functions:
+
+  ```bash
+  assert_empty() { [ -z "$1" ] || err $FUNCNAME "$@" ; }; export -f assert_empty
+  assert_equal() { [ "$1" = "$2" ] || err $FUNCNAME "$@" ; }; export -f assert_equal
+  ```
