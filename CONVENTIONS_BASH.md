@@ -245,3 +245,19 @@ This naming convention helps clarify that the functions are related to the trap 
     3. Time format with hour, minute, second, nanosecond: "HH:MM:SS.NNNNNNNNN"
     4. Timezone format with hour offset and minute offset: "+HH:MM".
 - Parse options via `while` and `case` not `getopts` or `getopt`.
+- We prefer to have a user's data directory in a standard place:
+  - Use `XDG_DATA_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.local/share`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer to have a user's cache directory in a standard place:
+  - Use `XDG_CACHE_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.cache`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer to have a user's configuration directory in a standard place:
+  - Use `XDG_CONFIG_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.config`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer to have a user's runtime directory in a standard place:
+  - Use `XDG_RUNTIME_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.runtime`.
+  - Append the program command, so the program uses its own subdirectory.
