@@ -175,7 +175,8 @@
   mode with the option enabled from the command line.
 
 - Complex scripts must provide a verbose mode enabled using -v and --verbose from the command line. When verbose mode \
-  is enabled, the script must provide detailed information about its execution, including any errors or warnings.
+  is enabled, the script must provide detailed information about its execution, including any errors or warnings.\
+  The verbose mode will also set a variable `verbose` to true.
 
 - When sourcing a file (say `include.sh`) for a script that may be executed from anywhere, use the following template:
 
