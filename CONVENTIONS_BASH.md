@@ -283,11 +283,11 @@ This naming convention helps clarify that the functions are related to the trap 
   - `cmd` return a path to the default runnable command in $1.
 
   ```bash
-  out() { printf %s\\n "$*" ; }; export -f out
-  err() { >&2 printf %s\\n "$*" ; }; export -f err
-  die() { >&2 printf %s\\n "$*" ; exit 1 ; }; export -f die
-  big() { printf \\n###\\n#\\n#\ %s\\n#\\n###\\n\\n "$*"; }; export -f big
-  log() { printf '%s %s %s\n' "$( now )" $$ "$*" ; }; export -f log
+  out() { printf "%b\n" "$*" ; }; export -f out
+  err() { >&2 printf "%b\n" "$*" ; }; export -f err
+  die() { >&2 printf "%b\n" "$*" ; exit 1 ; }; export -f die
+  big() { printf "\n###\n#\n#\ %b\n#\n###\n\n" "$*"; }; export -f big
+  log() { printf "%b %b %b\n" "$(now)" $$ "$*" ; }; export -f log
   now() { date -u "+%Y-%m-%dT%H:%M:%S.%NZ" ; }; export -f now
   sec() { date -u "+%s" ; }; export -f sec
   zid() { hexdump -n 16 -v -e '16/1 "%02x" "\n"' /dev/random ; }; export -f zid
@@ -299,8 +299,8 @@ This naming convention helps clarify that the functions are related to the trap 
 - We like to test our code during runtime by using assertions a.k.a. assert functions:
 
   ```bash
-  assert_empty() { [ -z "$1" ] || err $FUNCNAME "$@" ; }; export -f assert_empty
-  assert_equal() { [ "$1" = "$2" ] || err $FUNCNAME "$@" ; }; export -f assert_equal
+  assert_empty() { [ -z "$1" ] || err "$FUNCNAME[0]}" "$@" ; }; export -f assert_empty
+  assert_equal() { [ "$1" = "$2" ] || err "${FUNCNAME[0]}" "$@" ; }; export -f assert_equal
   ```
 
 - If a program's output is verbose, add a quiet option on the command line.
@@ -308,12 +308,12 @@ This naming convention helps clarify that the functions are related to the trap 
 - To create a temporary directory we use:
 
   - The command mktemp which creates the directory.
-  - If a temp prefix is provided, then use it; we prefer the use program_command which returns the name.
+  - If a temp prefix is provided, then use it; we prefer the use `program_command` which returns the name.
   - Otherwise, use a ZID i.e. secure random 32-character hex lowercase string.
 
     ```bash
-    temp_home() { out $(mktemp -d -t "${1:-$(zid)}"); }; export -f temp_home;
-    temp_dir() { out $(temp_home "$program_command"; };
+    temp_home() { out "$(mktemp -d -t "${1:-$(zid)}")"; }; export -f temp_home;
+    temp_dir() { out "$(temp_home "$program_command")"; };
     ```
 
 - We work with PostgreSQL frequently. We have simple shell functions to help us inspect our PostgreSQL servers.
