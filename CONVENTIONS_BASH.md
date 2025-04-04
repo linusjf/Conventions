@@ -183,7 +183,7 @@
   if command -v realpath >/dev/null 2>&1; then
     SCRIPT_DIR=$(dirname "$(realpath "$0")")
   else
-    SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+    SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &> /dev/null && pwd -P)
   fi
   source "$SCRIPT_DIR/include.sh"
   ```
@@ -246,3 +246,81 @@ This naming convention helps clarify that the functions are related to the trap 
     3. Time format with hour, minute, second, nanosecond: "HH:MM:SS.NNNNNNNNN"
     4. Timezone format with hour offset and minute offset: "+HH:MM".
 - Parse options via `while` and `case` not `getopts` or `getopt`.
+- We prefer to have a user's data directory in a standard place:
+  - Use `XDG_DATA_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.local/share`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer to have a user's cache directory in a standard place:
+  - Use `XDG_CACHE_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.cache`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer to have a user's configuration directory in a standard place:
+  - Use `XDG_CONFIG_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.config`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer to have a user's runtime directory in a standard place:
+  - Use `XDG_RUNTIME_HOME` environment variable if it's set.
+  - Otherwise use `$HOME/.runtime`.
+  - Append the program command, so the program uses its own subdirectory.
+- We prefer a program to be able to return its own name.
+
+  ```bash
+  program() {
+    printf "%s\n" "$(basename "$0")"
+  }
+  ```
+
+- Scripts may use these all-purpose functions:
+
+  - `out` is for output messages; it prints to STDOUT.
+  - `err` is for error messages; it prints to STDERR.
+  - `die` is for fatal messages; it prints to STDERR then exits.
+  - `big` is for banner messsages; it prints to STDOUT.
+  - `log` call out() prepending a time stamp and PID.
+  - `now` return a timestamp using UTC and ISO 8601:2004.
+  - `sec` return a timestamp using UTC and Unix epoch second.
+  - `zid` return a 128-bit secure random hex lowercase ID.
+  - `cmd` return a path to the default runnable command in $1.
+
+  ```bash
+  out() { printf %s\\n "$*" ; }; export -f out
+  err() { >&2 printf %s\\n "$*" ; }; export -f err
+  die() { >&2 printf %s\\n "$*" ; exit 1 ; }; export -f die
+  big() { printf \\n###\\n#\\n#\ %s\\n#\\n###\\n\\n "$*"; }; export -f big
+  log() { printf '%s %s %s\n' "$( now )" $$ "$*" ; }; export -f log
+  now() { date -u "+%Y-%m-%dT%H:%M:%S.%NZ" ; }; export -f now
+  sec() { date -u "+%s" ; }; export -f sec
+  zid() { hexdump -n 16 -v -e '16/1 "%02x" "\n"' /dev/random ; }; export -f zid
+  cmd() { command -v "$1" >/dev/null 2>&1 ; }; export -f cmd
+  ```
+
+  It's best to have these in a separate bash library file to be sourced by scripts that use any of these methods.
+
+- We like to test our code during runtime by using assertions a.k.a. assert functions:
+
+  ```bash
+  assert_empty() { [ -z "$1" ] || err $FUNCNAME "$@" ; }; export -f assert_empty
+  assert_equal() { [ "$1" = "$2" ] || err $FUNCNAME "$@" ; }; export -f assert_equal
+  ```
+
+- If a program's output is verbose, add a quiet option on the command line.
+  --quiet and -q which suppress stdout.
+- To create a temporary directory we use:
+
+  - The command mktemp which creates the directory.
+  - If a temp prefix is provided, then use it; we prefer the use program_command which returns the name.
+  - Otherwise, use a ZID i.e. secure random 32-character hex lowercase string.
+
+    ```bash
+    temp_home() { out $(mktemp -d -t "${1:-$(zid)}"); }; export -f temp_home;
+    temp_dir() { out $(temp_home "$program_command"; };
+    ```
+
+- We work with PostgreSQL frequently. We have simple shell functions to help us inspect our PostgreSQL servers.
+
+  ```bash
+   psql_user_names() { psql -tAc "SELECT usename FROM pg_catalog.pg_user;" ; }
+   psql_user_name_exist() { [ "$( psql -tAc "SELECT 1 FROM pg_catalog.pg_user WHERE usename='$1'" )" = '1' ] ; }
+   psql_database_names() { psql -tAc "SELECT datname FROM pg_database;" ; }
+   psql_database_name_exist() { [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$1'" )" = '1' ] ; }
+  ```
