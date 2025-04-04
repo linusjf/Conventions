@@ -304,3 +304,22 @@ This naming convention helps clarify that the functions are related to the trap 
 
 - If a program's output is verbose, add a quiet option on the command line.
   --quiet and -q which suppress stdout.
+- To create a temporary directory we use:
+
+  - The command mktemp which creates the directory.
+  - If a temp prefix is provided, then use it; we prefer the use program_command which returns the name.
+  - Otherwise, use a ZID i.e. secure random 32-character hex lowercase string.
+
+    ```bash
+    temp_home() { out $(mktemp -d -t "${1:-$(zid)}"); }; export -f temp_home;
+    temp_dir() { out $(temp_home "$program_command"; };
+    ```
+
+- We work with PostgreSQL frequently. We have simple shell functions to help us inspect our PostgreSQL servers.
+
+  ```bash
+   psql_user_names() { psql -tAc "SELECT usename FROM pg_catalog.pg_user;" ; }
+   psql_user_name_exist() { [ "$( psql -tAc "SELECT 1 FROM pg_catalog.pg_user WHERE usename='$1'" )" = '1' ] ; }
+   psql_database_names() { psql -tAc "SELECT datname FROM pg_database;" ; }
+   psql_database_name_exist() { [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$1'" )" = '1' ] ; }
+  ```
