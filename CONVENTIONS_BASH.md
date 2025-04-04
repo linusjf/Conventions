@@ -188,7 +188,8 @@
   source "$SCRIPT_DIR/include.sh"
   ```
 
-- A script's usage must also include examples.
+- A script's usage must also include examples. The usage signature should also have a parameter for the exit code to be returned.
+  If no exit code is passed in, then it returns 0. If the exit code is 0, usage is output to STDOUT, else STDERR.
 - For long-running scripts, trap signals, such as user pressing `CTRL-C`, then call a function that exits gracefully:
 
   ```bash
