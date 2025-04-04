@@ -283,11 +283,11 @@ This naming convention helps clarify that the functions are related to the trap 
   - `cmd` return a path to the default runnable command in $1.
 
   ```bash
-  out() { printf "%s\n" "$*" ; }; export -f out
-  err() { >&2 printf "%s\n" "$*" ; }; export -f err
-  die() { >&2 printf "%s\n" "$*" ; exit 1 ; }; export -f die
-  big() { printf "\n###\n#\n#\ %s\n#\n###\n\n" "$*"; }; export -f big
-  log() { printf "%s %s %s\n" "$(now)" $$ "$*" ; }; export -f log
+  out() { printf "%b\n" "$*" ; }; export -f out
+  err() { >&2 printf "%b\n" "$*" ; }; export -f err
+  die() { >&2 printf "%b\n" "$*" ; exit 1 ; }; export -f die
+  big() { printf "\n###\n#\n#\ %b\n#\n###\n\n" "$*"; }; export -f big
+  log() { printf "%b %b %b\n" "$(now)" $$ "$*" ; }; export -f log
   now() { date -u "+%Y-%m-%dT%H:%M:%S.%NZ" ; }; export -f now
   sec() { date -u "+%s" ; }; export -f sec
   zid() { hexdump -n 16 -v -e '16/1 "%02x" "\n"' /dev/random ; }; export -f zid
