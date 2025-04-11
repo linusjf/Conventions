@@ -72,7 +72,7 @@
 - If you have to write literal strings that are longer than 80 characters,\
   this should be done with a here document or an embedded newline if possible.
 
-- Pipelines should be split one per line if they don’t all fit on one line.\
+- Pipelines should be split one per line if they don't all fit on one line.\
   If a pipeline all fits on one line, it should be on one line.
 
 - Put `; then` and `; do` on the same line as the `if`, `for`, or `while`.
@@ -118,11 +118,11 @@
   at least one other function.
 
 - Put all functions together in the file just below constants.\
-  Don’t hide executable code between functions.\
+  Don't hide executable code between functions.\
   Doing so makes the code difficult to follow and results in nasty surprises \
   when debugging.
 
-- If you’ve got functions, put them all together near the top of the file.\
+- If you've got functions, put them all together near the top of the file.\
   Only includes, set statements and setting constants may be done\
   before declaring functions.
 

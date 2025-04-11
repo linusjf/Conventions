@@ -34,7 +34,7 @@
 - Nest fenced codeblocks within lists. Fenced Codeblocks should be surrounded by blank lines even in lists.
 - To create a blockquote, add a > in front of each line of a content block, (including any blank lines).
 - Use admonitions to call attention to particular details within the body of a doc, such as a cautionary warning, or a\
-  bit of supplemental information that isn’t essential to its primary reading.
+  bit of supplemental information that isn't essential to its primary reading.
 - Use simulated admonitions for environments or renderers that don't support admonitions.
 - Although you should generally avoid HTML, the `<details>` element enables readers to expand and collapse sections of\
   content on the page. This is useful when content needs to be made available, but needn't be presented in the default\

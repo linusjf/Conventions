@@ -6,13 +6,13 @@
 - Keep the code as simple as possible. Avoid unnecessary complexity.
 - Use meaningful names for variables, functions, etc. Names should reveal intent.
 - Functions should be small, focused, and ideally not exceed a few lines.
-- Only use comments when necessary—strive to make the code self-explanatory.
+- Only use comments when necessary-strive to make the code self-explanatory.
 - When comments are used, they should add useful info not evident from code.
 - Comment tricky, non-obvious, interesting, or important parts of your code.
 - Properly handle errors and exceptions to ensure robustness.
 - Consider security implications and follow security best practices.
 - Shell should only be used for small utilities or simple wrapper scripts.
-- Avoid aliases in scripts—use functions instead.
+- Avoid aliases in scripts-use functions instead.
 - Use semantic versioning (see **Versioning** section below).
 - If a script is over 100 lines or uses complex logic, consider a structured language.
 
@@ -90,7 +90,7 @@
 - Declare function-specific variables with `local`. Remember: Bash uses **dynamic scoping**.
 - Avoid modifying these Bash internals:  
   `BASH_VERSION`, `EUID`, `UID`, `PID`, `LINENO`, `FUNCNAME`, etc.
-- Avoid using underscore-prefixed vars (`_`, `__`)—they're reserved.
+- Avoid using underscore-prefixed vars (`_`, `__`)-they're reserved.
 - Quote variables: Prefer `"${var}"` over `"$var"`.
 - Use `"$@"` unless `"$*"` is specifically required.
 - Capitalize constants and environment variables.
