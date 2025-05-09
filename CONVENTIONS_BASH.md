@@ -114,6 +114,8 @@
 
 - Always check return values and give informative return values.
 
+- Avoid capturing the exit code `($?)` directly after using `!` command in Bash, as `!` inverts the exit status, and `$?` will reflect the result of the negation — not the actual command.
+
 - A function called `main` is required for scripts long enough to contain\
   at least one other function.
 
