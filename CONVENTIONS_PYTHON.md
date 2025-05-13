@@ -74,110 +74,21 @@
 
 - If operators with different priorities are used, consider adding whitespace around the operators with the lowest priority(ies). Use your own judgment; however, never use more than one space, and always have the same amount of whitespace on both sides of a binary operator:
 
-- Function annotations should use the normal rules for colons and always have spaces around the `->` arrow if present. (See [Function Annotations](#function-annotations) below for more about function annotations.):
+- Function annotations should use the normal rules for colons and always have spaces around the `->` arrow if present.
 
-  \# Correct:
-  def munge(input: AnyStr): ...
-  def munge() \-> PosInt: ...
+- Don’t use spaces around the `=` sign when used to indicate a keyword argument, or when used to indicate a default value for an _unannotated_ function parameter.
 
-  \# Wrong:
-  def munge(input:AnyStr): ...
-  def munge()\->PosInt: ...
+- When combining an argument annotation with a default value, however, do use spaces around the `=` sign:
 
-- Don’t use spaces around the `=` sign when used to indicate a keyword argument, or when used to indicate a default value for an _unannotated_ function parameter:
-
-  \# Correct:
-  def complex(real, imag\=0.0):
-  return magic(r\=real, i\=imag)
-
-  \# Wrong:
-  def complex(real, imag \= 0.0):
-  return magic(r \= real, i \= imag)
-
-  When combining an argument annotation with a default value, however, do use spaces around the `=` sign:
-
-  \# Correct:
-  def munge(sep: AnyStr \= None): ...
-  def munge(input: AnyStr, sep: AnyStr \= None, limit\=1000): ...
-
-  \# Wrong:
-  def munge(input: AnyStr\=None): ...
-  def munge(input: AnyStr, limit \= 1000): ...
-
-- Compound statements (multiple statements on the same line) are generally discouraged:
-
-  \# Correct:
-  if foo \== 'blah':
-  do_blah_thing()
-  do_one()
-  do_two()
-  do_three()
-
-  Rather not:
-
-  \# Wrong:
-  if foo \== 'blah': do_blah_thing()
-  do_one(); do_two(); do_three()
+- Compound statements (multiple statements on the same line) are generally discouraged.
 
 - While sometimes it’s okay to put an if/for/while with a small body on the same line, never do this for multi-clause statements. Also avoid folding such long lines!
 
-  Rather not:
+- Trailing commas are usually optional, except they are mandatory when making a tuple of one element. For clarity, it is recommended to surround the latter in (technically redundant) parentheses.
 
-  \# Wrong:
-  if foo \== 'blah': do_blah_thing()
-  for x in lst: total += x
-  while t < 10: t \= delay()
+- When trailing commas are redundant, they are often helpful when a version control system is used, when a list of values, arguments or imported items is expected to be extended over time. The pattern is to put each value (etc.) on a line by itself, always adding a trailing comma, and add the close parenthesis/bracket/brace on the next line. However it does not make sense to have a trailing comma on the same line as the closing delimiter (except in the case of singleton tuples).
 
-  Definitely not:
-
-  \# Wrong:
-  if foo \== 'blah': do_blah_thing()
-  else: do_non_blah_thing()
-
-  try: something()
-  finally: cleanup()
-
-  do_one(); do_two(); do_three(long, argument,
-  list, like, this)
-
-  if foo \== 'blah': one(); two(); three()
-
-## [When to Use Trailing Commas](#when-to-use-trailing-commas)
-
-Trailing commas are usually optional, except they are mandatory when making a tuple of one element. For clarity, it is recommended to surround the latter in (technically redundant) parentheses:
-
-\# Correct:
-FILES \= ('setup.cfg',)
-
-\# Wrong:
-FILES \= 'setup.cfg',
-
-When trailing commas are redundant, they are often helpful when a version control system is used, when a list of values, arguments or imported items is expected to be extended over time. The pattern is to put each value (etc.) on a line by itself, always adding a trailing comma, and add the close parenthesis/bracket/brace on the next line. However it does not make sense to have a trailing comma on the same line as the closing delimiter (except in the above case of singleton tuples):
-
-\# Correct:
-FILES \= \[
-'setup.cfg',
-'tox.ini',
-\]
-initialize(FILES,
-error\=True,
-)
-
-\# Wrong:
-FILES \= \['setup.cfg', 'tox.ini',\]
-initialize(FILES, error\=True,)
-
-## [Naming Conventions](#naming-conventions)
-
-The naming conventions of Python’s library are a bit of a mess, so we’ll never get this completely consistent – nevertheless, here are the currently recommended naming standards. New modules and packages (including third party frameworks) should be written to these standards, but where an existing library has a different style, internal consistency is preferred.
-
-### [Overriding Principle](#overriding-principle)
-
-Names that are visible to the user as public parts of the API should follow conventions that reflect usage rather than implementation.
-
-### [Descriptive: Naming Styles](#descriptive-naming-styles)
-
-There are a lot of different naming styles. It helps to be able to recognize what naming style is being used, independently from what they are used for.
+- Names that are visible to the user as public parts of the API should follow conventions that reflect usage rather than implementation.
 
 The following naming styles are commonly distinguished:
 
