@@ -54,112 +54,25 @@
 
 - Module level “dunders” (i.e. names with two leading and two trailing underscores) such as `__all__`, `__author__`, `__version__`, etc. should be placed after the module docstring but before any import statements _except_ `from __future__` imports. Python mandates that future-imports must appear in the module before any other code except docstrings:
 
-"""This is the example module.
-
-This module does stuff.
-"""
-
-from \_\_future\_\_ import barry_as_FLUFL
-
-\_\_all\_\_ \= \['a', 'b', 'c'\]
-\_\_version\_\_ \= '0.1'
-\_\_author\_\_ \= 'Cardinal Biggles'
-
-import os
-import sys
-
 - In Python, single-quoted strings and double-quoted strings are the same. Pick a rule and stick to it. When a string contains single or double quote characters, however, use the other one to avoid backslashes in the string. It improves readability.
 
 - For triple-quoted strings, always use double quote characters to be consistent with the docstring convention in PEP 257.
 
 - Avoid extraneous whitespace in the following situations:
 
-- Immediately inside parentheses, brackets or braces:
-
-  \# Correct:
-  spam(ham\[1\], {eggs: 2})
-
-  \# Wrong:
-  spam( ham\[ 1 \], { eggs: 2 } )
-
-- Between a trailing comma and a following close parenthesis:
-
-  \# Correct:
-  foo \= (0,)
-
-  \# Wrong:
-  bar \= (0, )
-
-- Immediately before a comma, semicolon, or colon:
-
-  \# Correct:
-  if x \== 4: print(x, y); x, y \= y, x
-
-  \# Wrong:
-  if x \== 4 : print(x , y) ; x , y \= y , x
-
-- However, in a slice the colon acts like a binary operator, and should have equal amounts on either side (treating it as the operator with the lowest priority). In an extended slice, both colons must have the same amount of spacing applied. Exception: when a slice parameter is omitted, the space is omitted:
-
-  \# Correct:
-  ham\[1:9\], ham\[1:9:3\], ham\[:9:3\], ham\[1::3\], ham\[1:9:\]
-  ham\[lower:upper\], ham\[lower:upper:\], ham\[lower::step\]
-  ham\[lower+offset : upper+offset\]
-  ham\[: upper_fn(x) : step_fn(x)\], ham\[:: step_fn(x)\]
-  ham\[lower + offset : upper + offset\]
-
-  \# Wrong:
-  ham\[lower + offset:upper + offset\]
-  ham\[1: 9\], ham\[1 :9\], ham\[1:9 :3\]
-  ham\[lower : : step\]
-  ham\[ : upper\]
-
-- Immediately before the open parenthesis that starts the argument list of a function call:
-
-  \# Correct:
-  spam(1)
-
-  \# Wrong:
-  spam (1)
-
-- Immediately before the open parenthesis that starts an indexing or slicing:
-
-  \# Correct:
-  dct\['key'\] \= lst\[index\]
-
-  \# Wrong:
-  dct \['key'\] \= lst \[index\]
-
-- More than one space around an assignment (or other) operator to align it with another:
-
-  \# Correct:
-  x \= 1
-  y \= 2
-  long_variable \= 3
-
-  \# Wrong:
-  x \= 1
-  y \= 2
-  long_variable \= 3
-
-### [Other Recommendations](#other-recommendations)
+  1. Immediately inside parentheses, brackets or braces.
+  1. Between a trailing comma and a following close parenthesis.
+  1. Immediately before a comma, semicolon, or colon.
+  1. However, in a slice the colon acts like a binary operator, and should have equal amounts on either side (treating it as the operator with the lowest priority). In an extended slice, both colons must have the same amount of spacing applied. Exception: when a slice parameter is omitted, the space is omitted.
+  1. Immediately before the open parenthesis that starts the argument list of a function call.
+  1. Immediately before the open parenthesis that starts an indexing or slicing.
+  1. More than one space around an assignment (or other) operator to align it with another.
 
 - Avoid trailing whitespace anywhere. Because it’s usually invisible, it can be confusing: e.g. a backslash followed by a space and a newline does not count as a line continuation marker. Some editors don’t preserve it and many projects (like CPython itself) have pre-commit hooks that reject it.
+
 - Always surround these binary operators with a single space on either side: assignment (`=`), augmented assignment (`+=`, `-=` etc.), comparisons (`==`, `<`, `>`, `!=`, `<=`, `>=`, `in`, `not in`, `is`, `is not`), Booleans (`and`, `or`, `not`).
+
 - If operators with different priorities are used, consider adding whitespace around the operators with the lowest priority(ies). Use your own judgment; however, never use more than one space, and always have the same amount of whitespace on both sides of a binary operator:
-
-  \# Correct:
-  i \= i + 1
-  submitted += 1
-  x \= x\*2 \- 1
-  hypot2 \= x\*x + y\*y
-  c \= (a+b) \* (a\-b)
-
-  \# Wrong:
-  i\=i+1
-  submitted +=1
-  x \= x \* 2 \- 1
-  hypot2 \= x \* x + y \* y
-  c \= (a + b) \* (a \- b)
 
 - Function annotations should use the normal rules for colons and always have spaces around the `->` arrow if present. (See [Function Annotations](#function-annotations) below for more about function annotations.):
 
