@@ -6,6 +6,8 @@
 
 - Use meaningful names for variables, functions, etc. Names should reveal intent.
 
+- All global variables in Bash scripts should be written in ALL_CAPS, while local variables should use lowercase or snake_case.
+
 - Functions should be small and do one thing well. They should not exceed a few lines.
 
 - Function names should describe the action being performed.
