@@ -150,6 +150,8 @@
   Pipes create a subshell, so any variables modified within a pipeline\
   do not propagate to the parent shell.
 
+- Do not assign or modify variables inside subshells ((...)) if the changes need to persist in the parent shell. Variables set in subshells are not visible in the parent shell, even if exported.
+
 - Function names should be lower-case, with underscores to separate words.\
   Separate libraries with `::`.\
   Parentheses are required after the function name.\

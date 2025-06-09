@@ -90,361 +90,164 @@
 
 - Names that are visible to the user as public parts of the API should follow conventions that reflect usage rather than implementation.
 
-The following naming styles are commonly distinguished:
+- The following naming styles are commonly distinguished:
 
-- `b` (single lowercase letter)
-- `B` (single uppercase letter)
-- `lowercase`
-- `lower_case_with_underscores`
-- `UPPERCASE`
-- `UPPER_CASE_WITH_UNDERSCORES`
-- `CapitalizedWords` (or CapWords, or CamelCase – so named because of the bumpy look of its letters [\[4\]](#id8)). This is also sometimes known as StudlyCaps.
+  1. `b` (single lowercase letter)
+  2. `B` (single uppercase letter)
+  3. `lowercase`
+  4. `lower_case_with_underscores`
+  5. `UPPERCASE`
+  6. `UPPER_CASE_WITH_UNDERSCORES`
+  7. `CapitalizedWords` (or CapWords, or CamelCase – so named because of the bumpy look of its letters. This is also sometimes known as StudlyCaps. Note: When using acronyms in CapWords, capitalize all the letters of the acronym. Thus HTTPServerError is better than HttpServerError.
+  8. `mixedCase` (differs from CapitalizedWords by initial lowercase character!)
+  9. `Capitalized_Words_With_Underscores` (ugly!)
 
-  Note: When using acronyms in CapWords, capitalize all the letters of the acronym. Thus HTTPServerError is better than HttpServerError.
+- There’s also the style of using a short unique prefix to group related names together. This is not used much in Python, but it is mentioned for completeness. For example, the `os.stat()` function returns a tuple whose items traditionally have names like `st_mode`, `st_size`, `st_mtime` and so on. (This is done to emphasize the correspondence with the fields of the POSIX system call struct, which helps programmers familiar with that.)
 
-- `mixedCase` (differs from CapitalizedWords by initial lowercase character!)
-- `Capitalized_Words_With_Underscores` (ugly!)
+- In addition, the following special forms using leading or trailing underscores are recognized (these can generally be combined with any case convention):
 
-There’s also the style of using a short unique prefix to group related names together. This is not used much in Python, but it is mentioned for completeness. For example, the `os.stat()` function returns a tuple whose items traditionally have names like `st_mode`, `st_size`, `st_mtime` and so on. (This is done to emphasize the correspondence with the fields of the POSIX system call struct, which helps programmers familiar with that.)
+  1. `_single_leading_underscore`: weak “internal use” indicator. E.g. `from M import *` does not import objects whose names start with an underscore.
+  2. `single_trailing_underscore_`: used by convention to avoid conflicts with Python keyword, e.g. :
+  3. `__double_leading_underscore`: when naming a class attribute, invokes name mangling (inside class FooBar, `__boo` becomes `_FooBar__boo`; see below).
+  4. `__double_leading_and_trailing_underscore__`: “magic” objects or attributes that live in user-controlled namespaces. E.g. `__init__`, `__import__` or `__file__`. Never invent such names; only use them as documented.
 
-The X11 library uses a leading X for all its public functions. In Python, this style is generally deemed unnecessary because attribute and method names are prefixed with an object, and function names are prefixed with a module name.
+- Never use the characters ‘l’ (lowercase letter el), ‘O’ (uppercase letter oh), or ‘I’ (uppercase letter eye) as single character variable names. In some fonts, these characters are indistinguishable from the numerals one and zero. When tempted to use ‘l’, use ‘L’ instead.
 
-In addition, the following special forms using leading or trailing underscores are recognized (these can generally be combined with any case convention):
+- Identifiers used in the standard library must be ASCII compatible.
 
-- `_single_leading_underscore`: weak “internal use” indicator. E.g. `from M import *` does not import objects whose names start with an underscore.
-- `single_trailing_underscore_`: used by convention to avoid conflicts with Python keyword, e.g. :
+- Modules should have short, all-lowercase names. Underscores can be used in the module name if it improves readability. Python packages should also have short, all-lowercase names, although the use of underscores is discouraged.
 
-  tkinter.Toplevel(master, class\_\='ClassName')
+- When an extension module written in C or C++ has an accompanying Python module that provides a higher level (e.g. more object oriented) interface, the C/C++ module has a leading underscore (e.g. `_socket`).
 
-- `__double_leading_underscore`: when naming a class attribute, invokes name mangling (inside class FooBar, `__boo` becomes `_FooBar__boo`; see below).
-- `__double_leading_and_trailing_underscore__`: “magic” objects or attributes that live in user-controlled namespaces. E.g. `__init__`, `__import__` or `__file__`. Never invent such names; only use them as documented.
+- Class names should normally use the CapWords convention.
 
-### [Prescriptive: Naming Conventions](#prescriptive-naming-conventions)
+- The naming convention for functions may be used instead in cases where the interface is documented and used primarily as a callable. Note that there is a separate convention for builtin names: most builtin names are single words (or two words run together), with the CapWords convention used only for exception names and builtin constants.
 
-#### [Names to Avoid](#names-to-avoid)
+- Names of type variables introduced in should normally use CapWords preferring short names: `T`, `AnyStr`, `Num`. It is recommended to add suffixes `_co` or `_contra` to the variables used to declare covariant or contravariant behavior correspondingly:
 
-Never use the characters ‘l’ (lowercase letter el), ‘O’ (uppercase letter oh), or ‘I’ (uppercase letter eye) as single character variable names.
+- Because exceptions should be classes, the class naming convention applies here. However, you should use the suffix “Error” on your exception names (if the exception actually is an error).
 
-In some fonts, these characters are indistinguishable from the numerals one and zero. When tempted to use ‘l’, use ‘L’ instead.
+- Modules that are designed for use via `from M import *` should use the `__all__` mechanism to prevent exporting globals, or use the older convention of prefixing such globals with an underscore (which you might want to do to indicate these globals are “module non-public”).
 
-#### [ASCII Compatibility](#ascii-compatibility)
+- Function names should be lowercase, with words separated by underscores as necessary to improve readability.
 
-Identifiers used in the standard library must be ASCII compatible as described in the [policy section](https://peps.python.org/pep-3131/#policy-specification "PEP 3131 – Supporting Non-ASCII Identifiers § Policy Specification") of [PEP 3131](https://peps.python.org/pep-3131/ "PEP 3131 – Supporting Non-ASCII Identifiers").
+- Variable names follow the same convention as function names.
 
-#### [Package and Module Names](#package-and-module-names)
+- mixedCase is allowed only in contexts where that’s already the prevailing style (e.g. threading.py), to retain backwards compatibility.
 
-Modules should have short, all-lowercase names. Underscores can be used in the module name if it improves readability. Python packages should also have short, all-lowercase names, although the use of underscores is discouraged.
+- Always use `self` for the first argument to instance methods.
 
-When an extension module written in C or C++ has an accompanying Python module that provides a higher level (e.g. more object oriented) interface, the C/C++ module has a leading underscore (e.g. `_socket`).
+- Always use `cls` for the first argument to class methods.
 
-#### [Class Names](#class-names)
+- If a function argument’s name clashes with a reserved keyword, it is generally better to append a single trailing underscore rather than use an abbreviation or spelling corruption. Thus `class_` is better than `clss`. (Perhaps better is to avoid such clashes by using a synonym.)
 
-Class names should normally use the CapWords convention.
+- Use the function naming rules: lowercase with words separated by underscores as necessary to improve readability.
 
-The naming convention for functions may be used instead in cases where the interface is documented and used primarily as a callable.
+- Use one leading underscore only for non-public methods and instance variables.
 
-Note that there is a separate convention for builtin names: most builtin names are single words (or two words run together), with the CapWords convention used only for exception names and builtin constants.
+- To avoid name clashes with subclasses, use two leading underscores to invoke Python’s name mangling rules.
 
-#### [Type Variable Names](#type-variable-names)
+- Python mangles these names with the class name: if class Foo has an attribute named `__a`, it cannot be accessed by `Foo.__a`. (An insistent user could still gain access by calling `Foo._Foo__a`.) Generally, double leading underscores should be used only to avoid name conflicts with attributes in classes designed to be subclassed.
 
-Names of type variables introduced in [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints") should normally use CapWords preferring short names: `T`, `AnyStr`, `Num`. It is recommended to add suffixes `_co` or `_contra` to the variables used to declare covariant or contravariant behavior correspondingly:
+- Constants are usually defined on a module level and written in all capital letters with underscores separating words. Examples include `MAX_OVERFLOW` and `TOTAL`.
 
-from typing import TypeVar
-
-VT_co \= TypeVar('VT_co', covariant\=True)
-KT_contra \= TypeVar('KT_contra', contravariant\=True)
-
-#### [Exception Names](#exception-names)
-
-Because exceptions should be classes, the class naming convention applies here. However, you should use the suffix “Error” on your exception names (if the exception actually is an error).
-
-#### [Global Variable Names](#global-variable-names)
-
-(Let’s hope that these variables are meant for use inside one module only.) The conventions are about the same as those for functions.
-
-Modules that are designed for use via `from M import *` should use the `__all__` mechanism to prevent exporting globals, or use the older convention of prefixing such globals with an underscore (which you might want to do to indicate these globals are “module non-public”).
-
-#### [Function and Variable Names](#function-and-variable-names)
-
-Function names should be lowercase, with words separated by underscores as necessary to improve readability.
-
-Variable names follow the same convention as function names.
-
-mixedCase is allowed only in contexts where that’s already the prevailing style (e.g. threading.py), to retain backwards compatibility.
-
-#### [Function and Method Arguments](#function-and-method-arguments)
-
-Always use `self` for the first argument to instance methods.
-
-Always use `cls` for the first argument to class methods.
-
-If a function argument’s name clashes with a reserved keyword, it is generally better to append a single trailing underscore rather than use an abbreviation or spelling corruption. Thus `class_` is better than `clss`. (Perhaps better is to avoid such clashes by using a synonym.)
-
-#### [Method Names and Instance Variables](#method-names-and-instance-variables)
-
-Use the function naming rules: lowercase with words separated by underscores as necessary to improve readability.
-
-Use one leading underscore only for non-public methods and instance variables.
-
-To avoid name clashes with subclasses, use two leading underscores to invoke Python’s name mangling rules.
-
-Python mangles these names with the class name: if class Foo has an attribute named `__a`, it cannot be accessed by `Foo.__a`. (An insistent user could still gain access by calling `Foo._Foo__a`.) Generally, double leading underscores should be used only to avoid name conflicts with attributes in classes designed to be subclassed.
-
-Note: there is some controversy about the use of \_\_names (see below).
-
-#### [Constants](#constants)
-
-Constants are usually defined on a module level and written in all capital letters with underscores separating words. Examples include `MAX_OVERFLOW` and `TOTAL`.
-
-#### [Designing for Inheritance](#designing-for-inheritance)
-
-Always decide whether a class’s methods and instance variables (collectively: “attributes”) should be public or non-public. If in doubt, choose non-public; it’s easier to make it public later than to make a public attribute non-public.
-
-Public attributes are those that you expect unrelated clients of your class to use, with your commitment to avoid backwards incompatible changes. Non-public attributes are those that are not intended to be used by third parties; you make no guarantees that non-public attributes won’t change or even be removed.
-
-We don’t use the term “private” here, since no attribute is really private in Python (without a generally unnecessary amount of work).
-
-Another category of attributes are those that are part of the “subclass API” (often called “protected” in other languages). Some classes are designed to be inherited from, either to extend or modify aspects of the class’s behavior. When designing such a class, take care to make explicit decisions about which attributes are public, which are part of the subclass API, and which are truly only to be used by your base class.
-
-With this in mind, here are the Pythonic guidelines:
+- Always decide whether a class’s methods and instance variables (collectively: “attributes”) should be public or non-public. If in doubt, choose non-public; it’s easier to make it public later than to make a public attribute non-public.
 
 - Public attributes should have no leading underscores.
+
 - If your public attribute name collides with a reserved keyword, append a single trailing underscore to your attribute name. This is preferable to an abbreviation or corrupted spelling. (However, notwithstanding this rule, ‘cls’ is the preferred spelling for any variable or argument which is known to be a class, especially the first argument to a class method.)
 
-  Note 1: See the argument name recommendation above for class methods.
-
 - For simple public data attributes, it is best to expose just the attribute name, without complicated accessor/mutator methods. Keep in mind that Python provides an easy path to future enhancement, should you find that a simple data attribute needs to grow functional behavior. In that case, use properties to hide functional implementation behind simple data attribute access syntax.
-
   Note 1: Try to keep the functional behavior side-effect free, although side-effects such as caching are generally fine.
-
   Note 2: Avoid using properties for computationally expensive operations; the attribute notation makes the caller believe that access is (relatively) cheap.
 
 - If your class is intended to be subclassed, and you have attributes that you do not want subclasses to use, consider naming them with double leading underscores and no trailing underscores. This invokes Python’s name mangling algorithm, where the name of the class is mangled into the attribute name. This helps avoid attribute name collisions should subclasses inadvertently contain attributes with the same name.
-
   Note 1: Note that only the simple class name is used in the mangled name, so if a subclass chooses both the same class name and attribute name, you can still get name collisions.
-
   Note 2: Name mangling can make certain uses, such as debugging and `__getattr__()`, less convenient. However the name mangling algorithm is well documented and easy to perform manually.
-
   Note 3: Not everyone likes name mangling. Try to balance the need to avoid accidental name clashes with potential use by advanced callers.
 
-### [Public and Internal Interfaces](#public-and-internal-interfaces)
+- Any backwards compatibility guarantees apply only to public interfaces. Accordingly, it is important that users be able to clearly distinguish between public and internal interfaces.
 
-Any backwards compatibility guarantees apply only to public interfaces. Accordingly, it is important that users be able to clearly distinguish between public and internal interfaces.
+- Documented interfaces are considered public, unless the documentation explicitly declares them to be provisional or internal interfaces exempt from the usual backwards compatibility guarantees. All undocumented interfaces should be assumed to be internal.
 
-Documented interfaces are considered public, unless the documentation explicitly declares them to be provisional or internal interfaces exempt from the usual backwards compatibility guarantees. All undocumented interfaces should be assumed to be internal.
+- To better support introspection, modules should explicitly declare the names in their public API using the `__all__` attribute. Setting `__all__` to an empty list indicates that the module has no public API.
 
-To better support introspection, modules should explicitly declare the names in their public API using the `__all__` attribute. Setting `__all__` to an empty list indicates that the module has no public API.
+- Even with `__all__` set appropriately, internal interfaces (packages, modules, classes, functions, attributes or other names) should still be prefixed with a single leading underscore.
 
-Even with `__all__` set appropriately, internal interfaces (packages, modules, classes, functions, attributes or other names) should still be prefixed with a single leading underscore.
+- An interface is also considered internal if any containing namespace (package, module or class) is considered internal.
 
-An interface is also considered internal if any containing namespace (package, module or class) is considered internal.
-
-Imported names should always be considered an implementation detail. Other modules must not rely on indirect access to such imported names unless they are an explicitly documented part of the containing module’s API, such as `os.path` or a package’s `__init__` module that exposes functionality from submodules.
-
-## [Programming Recommendations](#programming-recommendations)
+- Imported names should always be considered an implementation detail. Other modules must not rely on indirect access to such imported names unless they are an explicitly documented part of the containing module’s API, such as `os.path` or a package’s `__init__` module that exposes functionality from submodules.
 
 - Code should be written in a way that does not disadvantage other implementations of Python (PyPy, Jython, IronPython, Cython, Psyco, and such).
 
-  For example, do not rely on CPython’s efficient implementation of in-place string concatenation for statements in the form `a += b` or `a = a + b`. This optimization is fragile even in CPython (it only works for some types) and isn’t present at all in implementations that don’t use refcounting. In performance sensitive parts of the library, the `''.join()` form should be used instead. This will ensure that concatenation occurs in linear time across various implementations.
-
 - Comparisons to singletons like None should always be done with `is` or `is not`, never the equality operators.
-
   Also, beware of writing `if x` when you really mean `if x is not None` – e.g. when testing whether a variable or argument that defaults to None was set to some other value. The other value might have a type (such as a container) that could be false in a boolean context!
 
 - Use `is not` operator rather than `not ... is`. While both expressions are functionally identical, the former is more readable and preferred:
 
-  \# Correct:
-  if foo is not None:
-
-  \# Wrong:
-  if not foo is None:
-
 - When implementing ordering operations with rich comparisons, it is best to implement all six operations (`__eq__`, `__ne__`, `__lt__`, `__le__`, `__gt__`, `__ge__`) rather than relying on other code to only exercise a particular comparison.
 
-  To minimize the effort involved, the `functools.total_ordering()` decorator provides a tool to generate missing comparison methods.
+- To minimize the effort involved, the `functools.total_ordering()` decorator provides a tool to generate missing comparison methods.
 
-  [PEP 207](https://peps.python.org/pep-0207/ "PEP 207 – Rich Comparisons") indicates that reflexivity rules _are_ assumed by Python. Thus, the interpreter may swap `y > x` with `x < y`, `y >= x` with `x <= y`, and may swap the arguments of `x == y` and `x != y`. The `sort()` and `min()` operations are guaranteed to use the `<` operator and the `max()` function uses the `>` operator. However, it is best to implement all six operations so that confusion doesn’t arise in other contexts.
+- PEP 207 indicates that reflexivity rules _are_ assumed by Python. Thus, the interpreter may swap `y > x` with `x < y`, `y >= x` with `x <= y`, and may swap the arguments of `x == y` and `x != y`. The `sort()` and `min()` operations are guaranteed to use the `<` operator and the `max()` function uses the `>` operator. However, it is best to implement all six operations so that confusion doesn’t arise in other contexts.
 
 - Always use a def statement instead of an assignment statement that binds a lambda expression directly to an identifier:
 
-  \# Correct:
-  def f(x): return 2\*x
-
-  \# Wrong:
-  f \= lambda x: 2\*x
-
-  The first form means that the name of the resulting function object is specifically ‘f’ instead of the generic ‘<lambda>’. This is more useful for tracebacks and string representations in general. The use of the assignment statement eliminates the sole benefit a lambda expression can offer over an explicit def statement (i.e. that it can be embedded inside a larger expression)
+- The first form means that the name of the resulting function object is specifically ‘f’ instead of the generic `<lambda>`. This is more useful for tracebacks and string representations in general. The use of the assignment statement eliminates the sole benefit a lambda expression can offer over an explicit def statement (i.e. that it can be embedded inside a larger expression)
 
 - Derive exceptions from `Exception` rather than `BaseException`. Direct inheritance from `BaseException` is reserved for exceptions where catching them is almost always the wrong thing to do.
 
-  Design exception hierarchies based on the distinctions that code _catching_ the exceptions is likely to need, rather than the locations where the exceptions are raised. Aim to answer the question “What went wrong?” programmatically, rather than only stating that “A problem occurred” (see [PEP 3151](https://peps.python.org/pep-3151/ "PEP 3151 – Reworking the OS and IO exception hierarchy") for an example of this lesson being learned for the builtin exception hierarchy)
-
-  Class naming conventions apply here, although you should add the suffix “Error” to your exception classes if the exception is an error. Non-error exceptions that are used for non-local flow control or other forms of signaling need no special suffix.
+- Design exception hierarchies based on the distinctions that code _catching_ the exceptions is likely to need, rather than the locations where the exceptions are raised. Aim to answer the question “What went wrong?” programmatically, rather than only stating that “A problem occurred”.
 
 - Use exception chaining appropriately. `raise X from Y` should be used to indicate explicit replacement without losing the original traceback.
 
-  When deliberately replacing an inner exception (using `raise X from None`), ensure that relevant details are transferred to the new exception (such as preserving the attribute name when converting KeyError to AttributeError, or embedding the text of the original exception in the new exception message).
+- When deliberately replacing an inner exception (using `raise X from None`), ensure that relevant details are transferred to the new exception (such as preserving the attribute name when converting KeyError to AttributeError, or embedding the text of the original exception in the new exception message).
 
 - When catching exceptions, mention specific exceptions whenever possible instead of using a bare `except:` clause:
 
-  try:
-  import platform_specific_module
-  except ImportError:
-  platform_specific_module \= None
+- A bare `except:` clause will catch SystemExit and KeyboardInterrupt exceptions, making it harder to interrupt a program with Control-C, and can disguise other problems. If you want to catch all exceptions that signal program errors, use `except Exception:` (bare except is equivalent to `except BaseException:`).
 
-  A bare `except:` clause will catch SystemExit and KeyboardInterrupt exceptions, making it harder to interrupt a program with Control-C, and can disguise other problems. If you want to catch all exceptions that signal program errors, use `except Exception:` (bare except is equivalent to `except BaseException:`).
+- A good rule of thumb is to limit use of bare ‘except’ clauses to two cases:
 
-  A good rule of thumb is to limit use of bare ‘except’ clauses to two cases:
-
-  1.  If the exception handler will be printing out or logging the traceback; at least the user will be aware that an error has occurred.
-  2.  If the code needs to do some cleanup work, but then lets the exception propagate upwards with `raise`. `try...finally` can be a better way to handle this case.
+  1. If the exception handler will be printing out or logging the traceback; at least the user will be aware that an error has occurred.
+  2. If the code needs to do some cleanup work, but then lets the exception propagate upwards with `raise`. `try...finally` can be a better way to handle this case.
 
 - When catching operating system errors, prefer the explicit exception hierarchy introduced in Python 3.3 over introspection of `errno` values.
-- Additionally, for all try/except clauses, limit the `try` clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs:
 
-  \# Correct:
-  try:
-  value \= collection\[key\]
-  except KeyError:
-  return key_not_found(key)
-  else:
-  return handle_value(value)
-
-  \# Wrong:
-  try:
-  \# Too broad!
-  return handle_value(collection\[key\])
-  except KeyError:
-  \# Will also catch KeyError raised by handle_value()
-  return key_not_found(key)
+- Additionally, for all try/except clauses, limit the `try` clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs.
 
 - When a resource is local to a particular section of code, use a `with` statement to ensure it is cleaned up promptly and reliably after use. A try/finally statement is also acceptable.
-- Context managers should be invoked through separate functions or methods whenever they do something other than acquire and release resources:
 
-  \# Correct:
-  with conn.begin_transaction():
-  do_stuff_in_transaction(conn)
+- Context managers should be invoked through separate functions or methods whenever they do something other than acquire and release resources.
 
-  \# Wrong:
-  with conn:
-  do_stuff_in_transaction(conn)
-
-  The latter example doesn’t provide any information to indicate that the `__enter__` and `__exit__` methods are doing something other than closing the connection after a transaction. Being explicit is important in this case.
-
-- Be consistent in return statements. Either all return statements in a function should return an expression, or none of them should. If any return statement returns an expression, any return statements where no value is returned should explicitly state this as `return None`, and an explicit return statement should be present at the end of the function (if reachable):
-
-  \# Correct:
-
-  def foo(x):
-  if x \>= 0:
-  return math.sqrt(x)
-  else:
-  return None
-
-  def bar(x):
-  if x < 0:
-  return None
-  return math.sqrt(x)
-
-  \# Wrong:
-
-  def foo(x):
-  if x \>= 0:
-  return math.sqrt(x)
-
-  def bar(x):
-  if x < 0:
-  return
-  return math.sqrt(x)
+- Be consistent in return statements. Either all return statements in a function should return an expression, or none of them should. If any return statement returns an expression, any return statements where no value is returned should explicitly state this as `return None`, and an explicit return statement should be present at the end of the function (if reachable).
 
 - Use `''.startswith()` and `''.endswith()` instead of string slicing to check for prefixes or suffixes.
 
-  startswith() and endswith() are cleaner and less error prone:
+- Object type comparisons should always use isinstance() instead of comparing types directly.
 
-  \# Correct:
-  if foo.startswith('bar'):
-
-  \# Wrong:
-  if foo\[:3\] \== 'bar':
-
-- Object type comparisons should always use isinstance() instead of comparing types directly:
-
-  \# Correct:
-  if isinstance(obj, int):
-
-  \# Wrong:
-  if type(obj) is type(1):
-
-- For sequences, (strings, lists, tuples), use the fact that empty sequences are false:
-
-  \# Correct:
-  if not seq:
-  if seq:
-
-  \# Wrong:
-  if len(seq):
-  if not len(seq):
+- For sequences, (strings, lists, tuples), use the fact that empty sequences are false.
 
 - Don’t write string literals that rely on significant trailing whitespace. Such trailing whitespace is visually indistinguishable and some editors (or more recently, reindent.py) will trim them.
-- Don’t compare boolean values to True or False using `==`:
 
-  \# Correct:
-  if greeting:
+- Don’t compare boolean values to True or False using `==`.
 
-  \# Wrong:
-  if greeting \== True:
+- Use of the flow control statements `return`/`break`/`continue` within the finally suite of a `try...finally`, where the flow control statement would jump outside the finally suite, is discouraged. This is because such statements will implicitly cancel any active exception that is propagating through the finally suite.
 
-  Worse:
-
-  \# Wrong:
-  if greeting is True:
-
-- Use of the flow control statements `return`/`break`/`continue` within the finally suite of a `try...finally`, where the flow control statement would jump outside the finally suite, is discouraged. This is because such statements will implicitly cancel any active exception that is propagating through the finally suite:
-
-  \# Wrong:
-  def foo():
-  try:
-  1 / 0
-  finally:
-  return 42
-
-### [Function Annotations](#function-annotations)
-
-With the acceptance of [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints"), the style rules for function annotations have changed.
-
-- Function annotations should use [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints") syntax (there are some formatting recommendations for annotations in the previous section).
-- The experimentation with annotation styles that was recommended previously in this PEP is no longer encouraged.
-- However, outside the stdlib, experiments within the rules of [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints") are now encouraged. For example, marking up a large third party library or application with [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints") style type annotations, reviewing how easy it was to add those annotations, and observing whether their presence increases code understandability.
+- Function annotations should use PEP 484 syntax.
+- However, outside the stdlib, experiments within the rules of PEP 484 are now encouraged. For example, marking up a large third party library or application with PEP 484 style type annotations, reviewing how easy it was to add those annotations, and observing whether their presence increases code understandability.
 - The Python standard library should be conservative in adopting such annotations, but their use is allowed for new code and for big refactorings.
 - For code that wants to make a different use of function annotations it is recommended to put a comment of the form:
 
-  \# type: ignore
+  `# type: ignore`
 
-  near the top of the file; this tells type checkers to ignore all annotations. (More fine-grained ways of disabling complaints from type checkers can be found in [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints").)
+  near the top of the file; this tells type checkers to ignore all annotations.
 
 - Like linters, type checkers are optional, separate tools. Python interpreters by default should not issue any messages due to type checking and should not alter their behavior based on annotations.
-- Users who don’t want to use type checkers are free to ignore them. However, it is expected that users of third party library packages may want to run type checkers over those packages. For this purpose [PEP 484](https://peps.python.org/pep-0484/ "PEP 484 – Type Hints") recommends the use of stub files: .pyi files that are read by the type checker in preference of the corresponding .py files. Stub files can be distributed with a library, or separately (with the library author’s permission) through the typeshed repo [\[5\]](#id9).
+- Users who don’t want to use type checkers are free to ignore them. However, it is expected that users of third party library packages may want to run type checkers over those packages. For this purpose PEP 484 recommends the use of stub files: .pyi files that are read by the type checker in preference of the corresponding .py files. Stub files can be distributed with a library, or separately (with the library author’s permission) through the typeshed repo.
 
-### [Variable Annotations](#variable-annotations)
-
-[PEP 526](https://peps.python.org/pep-0526/ "PEP 526 – Syntax for Variable Annotations") introduced variable annotations. The style recommendations for them are similar to those on function annotations described above:
+- PEP 526 introduced variable annotations. The style recommendations for them are similar to those on function annotations described above.
 
 - Annotations for module level variables, class and instance variables, and local variables should have a single space after the colon.
 - There should be no space before the colon.
-- If an assignment has a right hand side, then the equality sign should have exactly one space on both sides:
-
-  \# Correct:
-
-  code: int
-
-  class Point:
-  coords: Tuple\[int, int\]
-  label: str \= '<unknown>'
-
-  \# Wrong:
-
-  code:int \# No space after colon
-  code : int \# Space before colon
-
-  class Test:
-  result: int\=0 \# No spaces around equality sign
+- If an assignment has a right hand side, then the equality sign should have exactly one space on both sides.
