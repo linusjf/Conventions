@@ -28,6 +28,9 @@
 
 - Imports are always put at the top of the file, just after any module comments and docstrings, and before module globals and constants.
 
+- All module-level constants must be declared at the top of the file, immediately after imports and before any class or function definitions.
+  Constants should be named in UPPER_SNAKE_CASE and grouped together for clarity and maintainability.
+
 - Imports should be grouped in the following order:
 
   1. Standard library imports.
